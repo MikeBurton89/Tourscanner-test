@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { ImageList, ImageListItem, Box, Grid, ImageListItemBar } from '@mui/material'
 import { TabPanel } from './TabSystem'
+import { getNumberOfSaves } from './services/getNumberOfSaves'
 
 
 
@@ -31,7 +32,7 @@ function AllImagesContainer() {
             <Grid item xs={6} md={8} lg={12}>
                 <ImageList cols={12} sx={{ margin: 'auto' }}>
                     {images && images.map((image) => <>
-                        <ImageListItem onClick={() => console.log(image)} cols={2} sx={{ marginX: '10px', marginY: '20px' }}>
+                        <ImageListItem onClick={() => getNumberOfSaves(image.image_id)} cols={2} sx={{ marginX: '10px', marginY: '20px' }}>
                             <img loading='lazy'
                                 src={image.url}
                                 key={image.image_id}
