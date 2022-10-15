@@ -9,7 +9,7 @@ function App() {
   return (
     <Grid container direction="row"
       justifyContent="center"
-      alignItems="center" sx={{ width: '75%' }}>
+      alignItems="center" sx={{ width: '100%' }}>
       <BasicTabs />
       <CssBaseline />
     </Grid>
