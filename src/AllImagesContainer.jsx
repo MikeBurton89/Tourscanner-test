@@ -23,9 +23,16 @@ function AllImagesContainer() {
     const [images, setImages] = useState([])
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [selectedImage, setSelectedImage] = useState({})
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleSave = (event, image) => {
+        event.preventDefault()
+        setSelectedImage(image)
+        setOpen(true)
+    }
 
     useEffect(() => {
 
@@ -59,16 +66,13 @@ function AllImagesContainer() {
                                 loading='lazy'
                                 src={image.url}
                                 key={image.image_id}
-                                onClick={() => {
-                                    getNumberOfSaves(image.image_id)
-                                    handleOpen()
-
-                                }} />
+                                onClick={(event) => handleSave(event, image)} />
                             <TitleBox title={image.title} />
                         </Grid>
+
                     </>)}
                 </Grid>
-                <SaveImageModal open={open} handleClose={handleClose} ></SaveImageModal>
+                <SaveImageModal selectedImage={selectedImage} open={open} handleClose={handleClose} ></SaveImageModal>
             </Grid>
         </TabPanel >
     )
