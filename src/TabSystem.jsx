@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AllImagesContainer from './AllImagesContainer';
+import { useQuery } from '@tanstack/react-query';
+
+import { getImages } from './services/getImages'
 
 export function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -32,15 +35,36 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 export default function BasicTabs() {
-    const [value, setValue] = React.useState(0);
+    const [bottomTabs, setBottomTabs] = useState(false)
+
+    const toggleVisibility = () => {
+        if (window.scrollY > 15) {
+            setBottomTabs(true);
+        } else {
+            setBottomTabs(false);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('scroll', toggleVisibility)
+    }, [])
+
+    const { data, isLoading, isFetching, refetch } = useQuery(['images'], () => getImages())
+    console.log(data)
+
+    useEffect(() => {
+        if (localStorage.getItem('All Images') === null) { refetch() }
+    }, [])
+
+    useEffect(() => {
+        if (data) {
+            localStorage.setItem('All Images', JSON.stringify(data))
+        }
+    }, [data, isLoading])
+
+    const [value, setValue] = React.useState('All Images');
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -50,20 +74,15 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="All Images" {...a11yProps(0)} />
-                    <Tab label="Bookmarked" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
+                    {Object.keys(localStorage).map((title) => <Tab label={title} value={title} />)}
                 </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
-                <AllImagesContainer></AllImagesContainer>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                Bookmarked
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-        </Box>
+            {
+                Object.keys(localStorage).map((tab) =>
+                    <TabPanel value={value} index={tab} >
+                        <AllImagesContainer arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
+                    </TabPanel>)
+            }
+        </Box >
     );
 }
