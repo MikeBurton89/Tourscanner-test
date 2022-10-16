@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { ImageList, TextField } from '@mui/material';
 import { getNumberOfSaves } from './services/getNumberOfSaves'
 import { postImageId } from './services/postImageId'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -26,6 +26,7 @@ export default function BasicModal({ selectedImage }) {
     const queryClient = useQueryClient()
     const [folderName, setFolderName] = useState('')
     const { open, setOpen } = useContext(ModalContext)
+    const [imageArray, setImageArray] = useState([])
 
     console.log(selectedImage)
 
@@ -41,7 +42,6 @@ export default function BasicModal({ selectedImage }) {
         onSuccess: data => {
             console.log(data);
             setOpen(false)
-
         },
         onError: () => {
             alert("there was an error")
@@ -54,15 +54,16 @@ export default function BasicModal({ selectedImage }) {
     const handleLocalSave = (event, image) => {
         event.preventDefault()
         mutate(image.image_id)
-        if (localStorage.getItem(folderName) === null) {
-            localStorage.setItem(folderName, JSON.stringify([image]))
-        }
-        // if (localStorage.getItem(folderName) !== null ) {
-        //     const items = JSON.parse(localStorage.getItem(folderName))
-        //     const newItems = JSON.stringify([...items, { image }])
-        //     localStorage.setItem(folderName, newItems)
-        // }
+        imageArray.push(image)
+        localStorage.setItem(folderName, JSON.stringify(imageArray))
+        console.log(Object.values(localStorage)) // TO FIX
     }
+    // if (localStorage.getItem(folderName) !== null ) {
+    //     const items = JSON.parse(localStorage.getItem(folderName))
+    //     const newItems = JSON.stringify([...items, { image }])
+    //     localStorage.setItem(folderName, newItems)
+    // }
+
 
 
     return (

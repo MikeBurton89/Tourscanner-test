@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material'
 import AllImagesContainer from './AllImagesContainer';
 import { useQuery } from '@tanstack/react-query';
 
@@ -79,10 +80,20 @@ export default function BasicTabs() {
             </Box>
             {
                 Object.keys(localStorage).map((tab) =>
-                    <TabPanel value={value} index={tab} >
+                    <TabPanel sx={{ overflow: 'scroll' }} value={value} index={tab} >
                         <AllImagesContainer arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
                     </TabPanel>)
             }
+            {bottomTabs && <ToggleButtonGroup
+                sx={{ position: 'sticky', bottom: 0, background: '#ddd' }}
+                color="primary"
+                value={value}
+                exclusive
+                onChange={handleChange}
+                aria-label="Platform"
+            >
+                {Object.keys(localStorage).map((title) => <ToggleButton value={title}>{title}</ToggleButton>)}
+            </ToggleButtonGroup>}
         </Box >
     );
 }

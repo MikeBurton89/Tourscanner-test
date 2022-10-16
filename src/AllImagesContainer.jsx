@@ -40,7 +40,7 @@ function AllImagesContainer({ arrayOfImages }) {
                 <Grid item xs={12}>
                     <Grid container>
                         {arrayOfImages && arrayOfImages.map((image) => <>
-                            <Grid item xs={10} sm={6} md={6} lg={4} xl={2} justifyItems='flex-start'>
+                            <Grid item xs={10} sm={8} md={6} lg={4} xl={3} justifyItems='flex-start'>
                                 <StyledImage
                                     component='img'
                                     loading='lazy'
