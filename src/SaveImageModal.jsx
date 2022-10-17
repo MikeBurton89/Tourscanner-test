@@ -51,21 +51,24 @@ export default function BasicModal({ selectedImage }) {
         }
     });
 
-    const handleLocalSave = (event, image) => {
+    const handleLocalSave = (event, image, folder) => {
         event.preventDefault()
         mutate(image.image_id)
-        imageArray.push(image)
-        localStorage.setItem(folderName, JSON.stringify(imageArray))
-        console.log(Object.values(localStorage)) // TO FIX
+        try {
+            if (localStorage.getItem(folder) !== null) {
+                const previousImages = JSON.parse(localStorage.getItem(folder))
+                console.log(previousImages)
+                const imageArray = [...previousImages, image]
+                localStorage.setItem(folder, JSON.stringify(imageArray))
+            }
+            if (localStorage.getItem(folder) === null) {
+                const imageArray = [image]
+                localStorage.setItem(folder, JSON.stringify(imageArray))
+            }
+        } catch (error) {
+            alert(error)
+        }
     }
-    // if (localStorage.getItem(folderName) !== null ) {
-    //     const items = JSON.parse(localStorage.getItem(folderName))
-    //     const newItems = JSON.stringify([...items, { image }])
-    //     localStorage.setItem(folderName, newItems)
-    // }
-
-
-
     return (
         <div>
             <Modal
@@ -75,17 +78,20 @@ export default function BasicModal({ selectedImage }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <TextField value={folderName} onChange={(e) => {
-                        e.preventDefault()
-                        setFolderName(e.target.value)
-                    }
-                    } placeholder={'Select a folder Name'}></TextField>
+                    <TextField
+                        value={folderName}
+                        onChange={(e) => {
+                            e.preventDefault()
+                            setFolderName(e.target.value)
+                        }}
+                        error={folderName.length < 1}
+                        placeholder={'Select a folder Name'}>
+                    </TextField>
                     {isFetching ? 'Loading...' :
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             {`This image has been saved ${data && data} times`}
                         </Typography>}
-
-                    {isLoadingPost ? 'Saving' : <Button onClick={(e) => handleLocalSave(e, selectedImage)}>Save</Button>}
+                    {isLoadingPost ? 'Saving' : <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>Save</Button>}
                 </Box>
             </Modal>
         </div>
