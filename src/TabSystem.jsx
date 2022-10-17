@@ -6,10 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material'
 import AllImagesContainer from './AllImagesContainer';
-import { useQuery } from '@tanstack/react-query';
-import SaveImageModal from './SaveImageModal'
 
-import { getImages } from './services/getImages'
 
 export function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -39,6 +36,7 @@ TabPanel.propTypes = {
 
 
 export default function BasicTabs() {
+    const [value, setValue] = useState('All Images');
     const [bottomTabs, setBottomTabs] = useState(false)
 
     const toggleVisibility = () => {
@@ -51,21 +49,6 @@ export default function BasicTabs() {
     useEffect(() => {
         window.addEventListener('scroll', toggleVisibility)
     }, [])
-
-    const { data, isLoading, isFetching, refetch } = useQuery(['images'], () => getImages())
-    console.log(data)
-
-    useEffect(() => {
-        if (localStorage.getItem('All Images') === null) { refetch() }
-    }, [])
-
-    useEffect(() => {
-        if (data) {
-            localStorage.setItem('All Images', JSON.stringify(data))
-        }
-    }, [data, isLoading])
-
-    const [value, setValue] = React.useState('All Images');
 
 
     const handleChange = (event, newValue) => {

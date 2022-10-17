@@ -52,7 +52,7 @@ function AllImagesContainer({ arrayOfImages, title }) {
                             </Grid>
                         </>)}
                     </Grid>
-                    <SaveImageModal title={title} selectedImage={selectedImage} ></SaveImageModal>
+                    <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>
                 </Grid>
             </TabPanel >
         </ ModalContext.Provider>

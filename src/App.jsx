@@ -3,23 +3,35 @@ import ImagesContainer from "./AllImagesContainer"
 import CssBaseline from '@mui/material/CssBaseline'
 import { Grid } from "@mui/material";
 import BasicTabs from "./TabSystem";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
+import { getImages } from "./services/getImages";
 
-const queryClient = new QueryClient()
+
+
 
 function App() {
+  const [initialState, setInitialState] = useState()
+  const { data, isLoading, isFetching, refetch } = useQuery(['images'], () => getImages())
+  console.log(data)
+
+  useEffect(() => {
+    if (localStorage.getItem('All Images') === null) { refetch() }
+  }, [])
+
+  useEffect(() => {
+    if (data) {
+      setInitialState(JSON.stringify(data))
+      localStorage.setItem('All Images', JSON.stringify(data))
+    }
+  }, [data, isLoading])
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Grid container direction="row"
-        justifyContent="center"
-        alignItems="center" sx={{ width: '100%' }}>
-        <BasicTabs />
-        <CssBaseline />
-      </Grid>
-    </QueryClientProvider>
+    <Grid container direction="row"
+      justifyContent="center"
+      alignItems="center" sx={{ width: '100%' }}>
+      <BasicTabs />
+      <CssBaseline />
+    </Grid>
   );
 }
 
