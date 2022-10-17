@@ -15,10 +15,10 @@ function TitleBox(props) {
                 width: '100%',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
-                textOverflow: 'ellpisis',
+                textOverflow: 'ellipisis',
                 margin: '10px 5px',
             }}>
-                <Typography variant='caption'>{props.title}</Typography>
+                <Typography color={props.color} variant='caption'>{props.title}</Typography>
             </div>
         </Stack>
     )

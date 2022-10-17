@@ -22,7 +22,8 @@ const StyledImage = styled(Box)(() =>
     objectFit: 'cover'
 }))
 
-function AllImagesContainer({ arrayOfImages }) {
+
+function AllImagesContainer({ arrayOfImages, title }) {
     // const [error, setError] = useState(null)
     // const [isLoading, setIsLoading] = useState(true)
     const [selectedImage, setSelectedImage] = useState({})
@@ -47,12 +48,11 @@ function AllImagesContainer({ arrayOfImages }) {
                                     src={image.url}
                                     key={image.image_id}
                                     onClick={(event) => handleSave(event, image)} />
-                                <TitleBox title={image.title} />
+                                <TitleBox color={selectedImage.image_id === image.image_id ? 'blue' : 'black'} title={image.title} />
                             </Grid>
-
                         </>)}
                     </Grid>
-                    <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>
+                    <SaveImageModal title={title} selectedImage={selectedImage} ></SaveImageModal>
                 </Grid>
             </TabPanel >
         </ ModalContext.Provider>

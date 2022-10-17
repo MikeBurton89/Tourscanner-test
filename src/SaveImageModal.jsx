@@ -22,11 +22,10 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal({ selectedImage }) {
+export default function BasicModal({ selectedImage, title }) {
     const queryClient = useQueryClient()
     const [folderName, setFolderName] = useState('')
     const { open, setOpen } = useContext(ModalContext)
-    const [imageArray, setImageArray] = useState([])
 
     console.log(selectedImage)
 
@@ -42,6 +41,7 @@ export default function BasicModal({ selectedImage }) {
         onSuccess: data => {
             console.log(data);
             setOpen(false)
+            setFolderName('')
         },
         onError: () => {
             alert("there was an error")
