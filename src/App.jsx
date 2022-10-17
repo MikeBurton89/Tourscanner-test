@@ -10,26 +10,27 @@ import { getImages } from "./services/getImages";
 
 
 function App() {
-  const [initialState, setInitialState] = useState()
-  const { data, isLoading, isFetching, refetch } = useQuery(['images'], () => getImages())
+  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
   console.log(data)
 
   useEffect(() => {
-    if (localStorage.getItem('All Images') === null) { refetch() }
+    if (!isFetched) {
+      refetch()
+    }
   }, [])
 
   useEffect(() => {
-    if (data) {
-      setInitialState(JSON.stringify(data))
+    if (isFetched && data) {
       localStorage.setItem('All Images', JSON.stringify(data))
     }
-  }, [data, isLoading])
+  }, [data, isFetching])
 
   return (
     <Grid container direction="row"
       justifyContent="center"
       alignItems="center" sx={{ width: '100%' }}>
       <BasicTabs />
+      {isFetching && 'Loading...'}
       <CssBaseline />
     </Grid>
   );

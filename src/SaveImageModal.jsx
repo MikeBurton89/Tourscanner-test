@@ -28,15 +28,16 @@ export default function BasicModal({ selectedImage, title }) {
     const { open, setOpen } = useContext(ModalContext)
 
     console.log(selectedImage)
+    // GET request enabled only on Modal opening
+    const { data, isFetching, refetch } = useQuery(['saves', open], () => getNumberOfSaves(selectedImage?.image_id), { enabled: false })
 
-    // useEffect(() => {
-    //     const fetchNumberOfSaves = getNumberOfSaves(selectedImage?.image_id)
-    //     setNumberOfSaves(fetchNumberOfSaves)
-    //     console.log(numberOfSaves)
-    // }, [selectedImage])
+    useEffect(() => {
+        if (open) {
+            refetch()
+        }
+    }, [open])
 
-    const { data, isFetching } = useQuery(['saves', selectedImage?.image_id], () => getNumberOfSaves(selectedImage?.image_id))
-
+    // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {
             console.log(data);
@@ -50,6 +51,8 @@ export default function BasicModal({ selectedImage, title }) {
             queryClient.invalidateQueries('create');
         }
     });
+
+
 
     const handleLocalSave = (event, image, folder) => {
         event.preventDefault()
