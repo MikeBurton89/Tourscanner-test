@@ -38,7 +38,6 @@ TabPanel.propTypes = {
 export default function BasicTabs() {
     const [value, setValue] = useState('All Images');
     const [bottomTabs, setBottomTabs] = useState(false)
-    const [allowModal, setAllowModal] = useState(false)
 
     const toggleVisibility = () => {
         if (window.scrollY > 15) {

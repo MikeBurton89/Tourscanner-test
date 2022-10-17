@@ -10,6 +10,7 @@ import { getImages } from "./services/getImages";
 
 
 function App() {
+  const [initialState, setInitialState] = useState([])
   const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
   console.log(data)
 
@@ -17,10 +18,11 @@ function App() {
     if (!isFetched) {
       refetch()
     }
-  }, [])
+  }, [isFetching, isFetched, initialState])
 
   useEffect(() => {
     if (isFetched && data) {
+      setInitialState([data])
       localStorage.setItem('All Images', JSON.stringify(data))
     }
   }, [data, isFetching])
@@ -29,7 +31,7 @@ function App() {
     <Grid container direction="row"
       justifyContent="center"
       alignItems="center" sx={{ width: '100%' }}>
-      <BasicTabs />
+      {isFetched && <BasicTabs />}
       {isFetching && 'Loading...'}
       <CssBaseline />
     </Grid>
