@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material'
 import AllImagesContainer from './AllImagesContainer';
 import { useQuery } from '@tanstack/react-query';
+import SaveImageModal from './SaveImageModal'
 
 import { getImages } from './services/getImages'
 

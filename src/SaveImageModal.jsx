@@ -82,7 +82,7 @@ export default function BasicModal({ selectedImage }) {
                         value={folderName}
                         onChange={(e) => {
                             e.preventDefault()
-                            setFolderName(e.target.value)
+                            setFolderName(e.target.value.toUpperCase())
                         }}
                         error={folderName.length < 1}
                         placeholder={'Select a folder Name'}>
