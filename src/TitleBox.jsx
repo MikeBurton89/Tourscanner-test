@@ -2,7 +2,9 @@ import React from 'react'
 import { Box, Grid, Typography, IconButton, Stack, } from '@mui/material'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-
+const truncate = (string) => {
+    return string.length > 30 ? string.substring(0, 90) + "..." : string
+}
 
 function TitleBox(props) {
     return (
@@ -18,7 +20,7 @@ function TitleBox(props) {
                 textOverflow: 'ellipisis',
                 margin: '10px 5px',
             }}>
-                <Typography color={props.color} variant='caption'>{props.title}</Typography>
+                <Typography color={props.color} variant='caption'>{truncate(props.title)}</Typography>
             </div>
         </Stack>
     )
