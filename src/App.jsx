@@ -18,14 +18,14 @@ function App() {
     if (!isFetched) {
       refetch()
     }
-  }, [isFetching, isFetched, initialState])
+  }, [])
 
   useEffect(() => {
     if (isFetched && data) {
       setInitialState([data])
       localStorage.setItem('All Images', JSON.stringify(data))
     }
-  }, [data, isFetching])
+  }, [initialState])
 
   return (
     <Grid container direction="row"
