@@ -23,7 +23,7 @@ const StyledImage = styled(Box)(() =>
 }))
 
 
-function AllImagesContainer({ arrayOfImages, title }) {
+function AllImagesContainer({ arrayOfImages, allowModal }) {
     // const [error, setError] = useState(null)
     // const [isLoading, setIsLoading] = useState(true)
     const [selectedImage, setSelectedImage] = useState({})
@@ -31,8 +31,10 @@ function AllImagesContainer({ arrayOfImages, title }) {
 
     const handleSave = (event, image) => {
         event.preventDefault()
-        setSelectedImage(image)
-        setOpen(true)
+        if (allowModal) {
+            setSelectedImage(image)
+            setOpen(true)
+        }
     }
 
     return (

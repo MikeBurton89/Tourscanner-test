@@ -35,7 +35,7 @@ export default function BasicModal({ selectedImage, title }) {
     //     console.log(numberOfSaves)
     // }, [selectedImage])
 
-    const { data, isFetching } = useQuery(['saves', selectedImage.image_id], () => getNumberOfSaves(selectedImage?.image_id))
+    const { data, isFetching } = useQuery(['saves', selectedImage?.image_id], () => getNumberOfSaves(selectedImage?.image_id))
 
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {
@@ -92,6 +92,7 @@ export default function BasicModal({ selectedImage, title }) {
                             {`This image has been saved ${data && data} times`}
                         </Typography>}
                     {isLoadingPost ? 'Saving' : <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>Save</Button>}
+                    <Button onClick={() => setOpen(false)}>Cancel</Button>
                 </Box>
             </Modal>
         </div>
