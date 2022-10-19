@@ -20,6 +20,12 @@ function App() {
     }
   }, [initialState, setInitialState])
 
+  useEffect(() => {
+    if (localStorage.getItem('Allimages') === null) {
+      refetch()
+    }
+  }, [localStorage])
+
   return (
     <Grid container direction="row"
       justifyContent="center"
