@@ -8,14 +8,13 @@ import { getImages } from "./services/getImages";
 
 function App() {
   const [initialState, setInitialState] = useState([])
-  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
+  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: true })
   console.log(data)
-
 
   useEffect(() => {
     if (isFetched && data) {
-
       localStorage.setItem('All Images', JSON.stringify(data))
+      setInitialState([data])
     }
   }, [data])
 
