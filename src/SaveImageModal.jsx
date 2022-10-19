@@ -22,21 +22,18 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal({ selectedImage, title }) {
+export default function BasicModal({ selectedImage }) {
     const queryClient = useQueryClient()
     const [folderName, setFolderName] = useState('')
     const { open, setOpen } = useContext(ModalContext)
-
-    console.log(selectedImage)
     // GET request enabled only on Modal opening
-    const { data, isFetching, refetch } = useQuery(['saves', open], () => getNumberOfSaves(selectedImage?.image_id), { enabled: false })
+    const { data, isFetching, refetch } = useQuery(['saves', open, selectedImage], () => getNumberOfSaves(selectedImage?.image_id), { enabled: false })
 
     useEffect(() => {
-        if (open) {
+        if (open && folderName !== '') {
             refetch()
         }
-    }, [open])
-
+    }, [open, folderName])
     // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {
@@ -51,8 +48,6 @@ export default function BasicModal({ selectedImage, title }) {
             queryClient.invalidateQueries('create');
         }
     });
-
-
 
     const handleLocalSave = (event, image, folder) => {
         event.preventDefault()
@@ -90,12 +85,15 @@ export default function BasicModal({ selectedImage, title }) {
                         error={folderName.length < 1}
                         placeholder={'Select a folder Name'}>
                     </TextField>
-                    {isFetching ? 'Loading...' :
+                    {folderName ?
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             {`This image has been saved ${data && data} times`}
-                        </Typography>}
+                        </Typography> : 'Loading...'}
                     {isLoadingPost ? 'Saving' : <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>Save</Button>}
-                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                    <Button onClick={() => {
+                        setOpen(false)
+                        setFolderName('')
+                    }}>Cancel</Button>
                 </Box>
             </Modal>
         </div>

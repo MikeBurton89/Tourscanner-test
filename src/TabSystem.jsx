@@ -52,7 +52,7 @@ export default function BasicTabs() {
     }, [])
 
     useEffect(() => {
-        setLocalStorageArray(Object.keys(localStorage))
+        setLocalStorageArray(() => Object.keys(localStorage))
     }, [localStorageArray])
 
 
@@ -64,11 +64,11 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    {localStorageArray.map((title) => <Tab label={title} value={title} />)}
+                    {Object.keys(localStorage).map((title) => <Tab label={title} value={title} />)}
                 </Tabs>
             </Box>
             {
-                localStorageArray.map((tab) =>
+                Object.keys(localStorage).map((tab) =>
                     <TabPanel sx={{ overflow: 'scroll' }} value={value} index={tab} >
                         <AllImagesContainer allowModal={tab === 'All Images' ? true : false} arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
                     </TabPanel>)

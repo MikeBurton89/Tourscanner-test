@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     if (isFetched && data) {
-      setInitialState([data])
+      setInitialState(() => [data])
       localStorage.setItem('All Images', JSON.stringify(data))
     }
   }, [initialState])
