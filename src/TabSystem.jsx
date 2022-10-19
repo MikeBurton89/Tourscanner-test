@@ -47,6 +47,7 @@ export default function BasicTabs() {
             setBottomTabs(false);
         }
     };
+
     useEffect(() => {
         window.addEventListener('scroll', toggleVisibility)
     }, [])
@@ -64,12 +65,12 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    {Object.keys(localStorage).map((title) => <Tab label={title} value={title} />)}
+                    {Object.keys(localStorage).map((title) => <Tab key={title} label={title} value={title} />)}
                 </Tabs>
             </Box>
             {
                 Object.keys(localStorage).map((tab) =>
-                    <TabPanel sx={{ overflow: 'scroll' }} value={value} index={tab} >
+                    <TabPanel key={tab} sx={{ overflow: 'scroll' }} value={value} index={tab} >
                         <AllImagesContainer allowModal={tab === 'All Images' ? true : false} arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
                     </TabPanel>)
             }
@@ -81,7 +82,7 @@ export default function BasicTabs() {
                 onChange={handleChange}
                 aria-label="Platform"
             >
-                {Object.keys(localStorage).map((title) => <ToggleButton value={title}>{title}</ToggleButton>)}
+                {Object.keys(localStorage).map((title) => <ToggleButton key={title} value={title}>{title}</ToggleButton>)}
             </ToggleButtonGroup>}
         </Box >
     );

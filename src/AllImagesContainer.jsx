@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query';
-import { Box, Grid, Typography, IconButton, Stack, } from '@mui/material'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Box, Grid, } from '@mui/material'
 import { TabPanel } from './TabSystem'
 import TitleBox from './TitleBox'
-import { getNumberOfSaves } from './services/getNumberOfSaves'
 import SaveImageModal from './SaveImageModal'
 import { createContext, } from 'react';
-
 import { styled } from '@mui/material/styles'
-import { handleBreakpoints } from '@mui/system';
 
 export const ModalContext = createContext()
 const StyledImage = styled(Box)(() =>
@@ -54,7 +48,7 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
                             </Grid>
                         </>)}
                     </Grid>
-                    <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>
+                    {open === true && <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>}
                 </Grid>
             </TabPanel >
         </ ModalContext.Provider>

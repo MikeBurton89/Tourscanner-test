@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { ImageList, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { getNumberOfSaves } from './services/getNumberOfSaves'
 import { postImageId } from './services/postImageId'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -27,13 +27,15 @@ export default function BasicModal({ selectedImage }) {
     const [folderName, setFolderName] = useState('')
     const { open, setOpen } = useContext(ModalContext)
     // GET request enabled only on Modal opening
-    const { data, isFetching, refetch } = useQuery(['saves', open, selectedImage], () => getNumberOfSaves(selectedImage?.image_id), { enabled: false })
+    const { data, isFetching, refetch } = useQuery(['saves', open], () => getNumberOfSaves(selectedImage.image_id), { enabled: false })
 
     useEffect(() => {
-        if (open && folderName !== '') {
+        if (folderName !== '') {
             refetch()
         }
-    }, [open, folderName])
+    }, [])
+
+    console.log('render')
     // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {
@@ -87,7 +89,7 @@ export default function BasicModal({ selectedImage }) {
                     </TextField>
                     {folderName ?
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {`This image has been saved ${data && data} times`}
+                            {`This image has been saved ${data ? data : ''} times`}
                         </Typography> : 'Loading...'}
                     {isLoadingPost ? 'Saving' : <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>Save</Button>}
                     <Button onClick={() => {

@@ -7,8 +7,6 @@ import { useQuery } from '@tanstack/react-query'
 import { getImages } from "./services/getImages";
 
 
-
-
 function App() {
   const [initialState, setInitialState] = useState([])
   const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
