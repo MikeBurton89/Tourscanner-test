@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ImagesContainer from "./AllImagesContainer"
 import CssBaseline from '@mui/material/CssBaseline'
 import { Grid } from "@mui/material";
 import BasicTabs from "./TabSystem";
@@ -9,7 +8,7 @@ import { getImages } from "./services/getImages";
 
 function App() {
   const [initialState, setInitialState] = useState([])
-  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: true, staleTime: Infinity })
+  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
   console.log(data)
 
 
