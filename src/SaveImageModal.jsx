@@ -27,13 +27,13 @@ export default function BasicModal({ selectedImage }) {
     const [folderName, setFolderName] = useState('')
     const { open, setOpen } = useContext(ModalContext)
     // GET request enabled only on Modal opening
-    const { data, isFetching, refetch } = useQuery(['saves', open], () => getNumberOfSaves(selectedImage.image_id), { enabled: false })
+    const { data } = useQuery(['saves', open, selectedImage.id], () => getNumberOfSaves(selectedImage.image_id), { enabled: true })
 
-    useEffect(() => {
-        if (open && folderName !== '') {
-            refetch()
-        }
-    }, [open])
+    // useEffect(() => {
+    //     if (open && folderName !== '') {
+    //         refetch()
+    //     }
+    // }, [open])
 
     // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
@@ -41,6 +41,7 @@ export default function BasicModal({ selectedImage }) {
             console.log(data);
             setOpen(false)
             setFolderName('')
+            alert(`Saved in ${folderName}`)
         },
         onError: () => {
             alert("there was an error")
@@ -75,6 +76,7 @@ export default function BasicModal({ selectedImage }) {
                 onClose={() => setOpen(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                BackdropProps={{ style: { backgroundColor: 'transparent' } }}
             >
                 <Box sx={style}>
                     <TextField

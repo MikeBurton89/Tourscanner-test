@@ -14,13 +14,13 @@ function App() {
 
   useEffect(() => {
     if (isFetched && data) {
-      setInitialState([data])
+
       localStorage.setItem('All Images', JSON.stringify(data))
     }
-  }, [initialState, setInitialState])
+  }, [data])
 
   useEffect(() => {
-    if (localStorage.getItem('Allimages') === null) {
+    if (localStorage.getItem('All Images') === null) {
       refetch()
     }
   }, [localStorage])
@@ -29,7 +29,7 @@ function App() {
     <Grid container direction="row"
       justifyContent="center"
       alignItems="center" sx={{ width: '100%' }}>
-      {isFetched && <BasicTabs />}
+      {isFetched && <BasicTabs initialState={initialState} />}
       {isFetching && 'Loading...'}
       <CssBaseline />
     </Grid>

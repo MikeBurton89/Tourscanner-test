@@ -47,8 +47,8 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
                                 <TitleBox color={selectedImage.image_id === image.image_id ? 'blue' : 'black'} title={image.title} />
                             </Grid>
                         </>)}
+                        {open === true && <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>}
                     </Grid>
-                    {open === true && <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>}
                 </Grid>
             </TabPanel >
         </ ModalContext.Provider>

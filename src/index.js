@@ -7,7 +7,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnmount: true, staleTime: Infinity, } } })
+const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnmount: true, } } })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

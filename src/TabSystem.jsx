@@ -28,14 +28,8 @@ export function TabPanel(props) {
     );
 }
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
 
-
-export default function BasicTabs() {
+export default function BasicTabs(props) {
     const [value, setValue] = useState('All Images');
     const [bottomTabs, setBottomTabs] = useState(false)
 
@@ -47,12 +41,9 @@ export default function BasicTabs() {
         }
     };
 
-    useEffect(() => console.log('render'), [Object.keys(localStorage)])
-
     useEffect(() => {
         window.addEventListener('scroll', toggleVisibility)
     }, [])
-
 
 
     const handleChange = (event, newValue) => {
@@ -69,7 +60,7 @@ export default function BasicTabs() {
             {
                 Object.keys(localStorage).map((tab) =>
                     <TabPanel key={tab} sx={{ overflow: 'scroll' }} value={value} index={tab} >
-                        <AllImagesContainer allowModal arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
+                        <AllImagesContainer allowModal={tab === 'All Images'} arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
                     </TabPanel>)
             }
             {bottomTabs && <ToggleButtonGroup
