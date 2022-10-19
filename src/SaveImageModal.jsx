@@ -30,12 +30,11 @@ export default function BasicModal({ selectedImage }) {
     const { data, isFetching, refetch } = useQuery(['saves', open], () => getNumberOfSaves(selectedImage.image_id), { enabled: false })
 
     useEffect(() => {
-        if (folderName !== '') {
+        if (open && folderName !== '') {
             refetch()
         }
-    }, [])
+    }, [open])
 
-    console.log('render')
     // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {

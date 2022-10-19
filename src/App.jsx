@@ -9,21 +9,16 @@ import { getImages } from "./services/getImages";
 
 function App() {
   const [initialState, setInitialState] = useState([])
-  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: false })
+  const { data, isFetching, isFetched, refetch } = useQuery(['images'], () => getImages(), { enabled: true, staleTime: Infinity })
   console.log(data)
 
-  useEffect(() => {
-    if (!isFetched) {
-      refetch()
-    }
-  }, [])
 
   useEffect(() => {
     if (isFetched && data) {
-      setInitialState(() => [data])
+      setInitialState([data])
       localStorage.setItem('All Images', JSON.stringify(data))
     }
-  }, [initialState])
+  }, [initialState, setInitialState])
 
   return (
     <Grid container direction="row"
