@@ -22,7 +22,7 @@ function App() {
     if (localStorage.getItem('All Images') === null) {
       refetch()
     }
-  }, [localStorage])
+  }, [])
 
   return (
     <Grid container direction="row"

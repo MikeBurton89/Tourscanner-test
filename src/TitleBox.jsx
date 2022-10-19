@@ -8,20 +8,9 @@ const truncate = (string) => {
 
 function TitleBox(props) {
     return (
-        <Stack direction='row' justifyContent='space-between'>
+        <Stack sx={{ width: '300px' }} direction='row' justifyContent='space-between' alignItems='center'>
             <IconButton><ArrowDropDownIcon /></IconButton>
-            <div style={{
-                display: `webkit-box`,
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-                width: '100%',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipisis',
-                margin: '10px 5px',
-            }}>
-                <Typography color={props.color} variant='caption'>{truncate(props.title)}</Typography>
-            </div>
+            <Typography color={props.color} variant='caption'>{truncate(props.title)}</Typography>
         </Stack>
     )
 }
