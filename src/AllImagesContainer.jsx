@@ -28,6 +28,7 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
         if (allowModal) {
             setSelectedImage(image)
             setOpen(true)
+
         }
     }
 
