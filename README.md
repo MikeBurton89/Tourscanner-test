@@ -1,10 +1,16 @@
-# Getting Started with Create React App
+## Run Locally
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clone this repository https://github.com/MikeBurton89/Tourscanner-test.git
+Move to master branch
 
-## Available Scripts
+## Hosted
 
-In the project directory, you can run:
+This project is hosted on [Vercel](https://tourscanner-test.vercel.app/)
+
+## Run Locally
+
+Clone this repository https://github.com/MikeBurton89/Tourscanner-test.git
+Move to master branch and run in command line:
 
 ### `npm start`
 

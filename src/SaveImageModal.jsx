@@ -25,6 +25,7 @@ const style = {
 export default function BasicModal({ selectedImage }) {
     const queryClient = useQueryClient()
     const [folderName, setFolderName] = useState('')
+    const [savedImages, setSavedImages] = useState([])
     const { open, setOpen } = useContext(ModalContext)
     // GET request enabled only on Modal opening
     const { data } = useQuery(['saves', open, selectedImage.id], () => getNumberOfSaves(selectedImage.image_id), { enabled: true })
@@ -60,6 +61,7 @@ export default function BasicModal({ selectedImage }) {
                 console.log(previousImages)
                 const imageArray = [...previousImages, image]
                 localStorage.setItem(folder, JSON.stringify(imageArray))
+                console.log(savedImages)
             }
             if (localStorage.getItem(folder) === null) {
                 const imageArray = [image]
