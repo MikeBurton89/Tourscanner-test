@@ -13,7 +13,8 @@ const StyledImage = styled(Box)(() =>
     margin: `10px 5px`,
     height: '270px',
     width: `300px`,
-    objectFit: 'cover'
+    objectFit: 'cover',
+    cursor: 'url(hand.cur), pointer',
 }))
 
 
@@ -38,7 +39,7 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
                 <Grid item xs={12}>
                     <Grid container>
                         {arrayOfImages && arrayOfImages.map((image) => <>
-                            <Grid item xs={10} sm={8} md={6} lg={4} xl={3} justifyItems='flex-start'>
+                            <Grid item xs={12} sm={8} md={6} lg={4} xl={3} justifyItems='flex-start'>
                                 <StyledImage
                                     component='img'
                                     loading='lazy'

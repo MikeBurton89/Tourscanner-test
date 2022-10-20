@@ -53,7 +53,12 @@ export default function BasicTabs(props) {
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="saved images tab"
+                    variant="scrollable"
+                    scrollButtons="auto">
                     {Object.keys(localStorage).map((title) => <Tab key={title} label={title} value={title} />)}
                 </Tabs>
             </Box>
