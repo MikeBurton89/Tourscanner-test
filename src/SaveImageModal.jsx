@@ -22,21 +22,13 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal({ selectedImage }) {
+export default function BasicModal({ selectedImage, savedImages }) {
     const queryClient = useQueryClient()
     const [folderName, setFolderName] = useState('')
-    const [savedImages, setSavedImages] = useState([])
     const { open, setOpen } = useContext(ModalContext)
     // GET request enabled only on Modal opening
     const { data } = useQuery(['saves', open, selectedImage.id], () => getNumberOfSaves(selectedImage.image_id), { enabled: true })
 
-    // useEffect(() => {
-    //     if (open && folderName !== '') {
-    //         refetch()
-    //     }
-    // }, [open])
-
-    // POST request to backend
     const { mutate, isFetching: isLoadingPost } = useMutation(postImageId, {
         onSuccess: data => {
             console.log(data);
@@ -56,21 +48,20 @@ export default function BasicModal({ selectedImage }) {
         event.preventDefault()
         mutate(image.image_id)
         try {
-            if (localStorage.getItem(folder) !== null) {
+            if (window.localStorage.getItem(folder) !== null) {
                 const previousImages = JSON.parse(localStorage.getItem(folder))
-                console.log(previousImages)
                 const imageArray = [...previousImages, image]
-                localStorage.setItem(folder, JSON.stringify(imageArray))
-                console.log(savedImages)
+                window.localStorage.setItem(folder, JSON.stringify(imageArray))
             }
-            if (localStorage.getItem(folder) === null) {
+            if (window.localStorage.getItem(folder) === null) {
                 const imageArray = [image]
-                localStorage.setItem(folder, JSON.stringify(imageArray))
+                window.localStorage.setItem(folder, JSON.stringify(imageArray))
             }
         } catch (error) {
             alert(error)
         }
     }
+
     return (
         <div>
             <Modal

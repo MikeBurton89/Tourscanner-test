@@ -30,7 +30,7 @@ export function TabPanel(props) {
 
 
 export default function BasicTabs(props) {
-    const [value, setValue] = useState('All Images');
+    const [value, setValue] = useState(0);
     const [bottomTabs, setBottomTabs] = useState(false)
 
     const toggleVisibility = () => {
@@ -59,12 +59,12 @@ export default function BasicTabs(props) {
                     aria-label="saved images tab"
                     variant="scrollable"
                     scrollButtons="auto">
-                    {Object.keys(localStorage).map((title) => <Tab key={title} label={title} value={title} />)}
+                    {Object.keys(window.localStorage).map((title, index) => <Tab key={title} label={title} value={index} />)}
                 </Tabs>
             </Box>
             {
-                Object.keys(localStorage).map((tab) =>
-                    <TabPanel key={tab} sx={{ overflow: 'scroll' }} value={value} index={tab} >
+                Object.keys(window.localStorage).map((tab, index) =>
+                    <TabPanel key={tab} sx={{ overflow: 'scroll' }} value={value} index={index} >
                         <AllImagesContainer allowModal={tab === 'All Images'} arrayOfImages={JSON.parse(localStorage.getItem(tab))} />
                     </TabPanel>)
             }
@@ -76,7 +76,7 @@ export default function BasicTabs(props) {
                 onChange={handleChange}
                 aria-label="Platform"
             >
-                {Object.keys(localStorage).map((title) => <ToggleButton key={title} value={title}>{title}</ToggleButton>)}
+                {Object.keys(window.localStorage).map((title) => <ToggleButton key={title} value={title}>{title}</ToggleButton>)}
             </ToggleButtonGroup>}
         </Box >
     );

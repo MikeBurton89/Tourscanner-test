@@ -13,13 +13,13 @@ function App() {
 
   useEffect(() => {
     if (isFetched && data) {
-      localStorage.setItem('All Images', JSON.stringify(data))
+      window.localStorage.setItem('All Images', JSON.stringify(data))
       setInitialState([data])
     }
   }, [data])
 
   useEffect(() => {
-    if (localStorage.getItem('All Images') === null) {
+    if (window.localStorage.getItem('All Images') === null) {
       refetch()
     }
   }, [])

@@ -19,16 +19,17 @@ const StyledImage = styled(Box)(() =>
 
 
 function AllImagesContainer({ arrayOfImages, allowModal }) {
-    // const [error, setError] = useState(null)
-    // const [isLoading, setIsLoading] = useState(true)
     const [selectedImage, setSelectedImage] = useState({})
     const [open, setOpen] = useState(false);
+    const [savedImages, setSavedImages] = useState([])
+
 
     const handleSave = (event, image) => {
         event.preventDefault()
         if (allowModal) {
             setSelectedImage(image)
             setOpen(true)
+            setSavedImages([...savedImages, image.url])
 
         }
     }
@@ -38,18 +39,19 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
             <TabPanel>
                 <Grid item xs={12}>
                     <Grid container>
-                        {arrayOfImages && arrayOfImages.map((image) => <>
-                            <Grid item xs={12} sm={8} md={6} lg={4} xl={3} justifyItems='flex-start'>
-                                <StyledImage
-                                    component='img'
-                                    loading='lazy'
-                                    src={image.url}
-                                    key={image.image_id}
-                                    onClick={(event) => handleSave(event, image)} />
-                                <TitleBox color={selectedImage.image_id === image.image_id ? 'blue' : 'black'} title={image.title} />
-                            </Grid>
-                        </>)}
-                        {open === true && <SaveImageModal selectedImage={selectedImage} ></SaveImageModal>}
+                        {arrayOfImages && arrayOfImages.map((image) =>
+                            <>
+                                <Grid item xs={12} sm={8} md={6} lg={4} xl={3} justifyItems='flex-start'>
+                                    <StyledImage
+                                        component='img'
+                                        loading='lazy'
+                                        src={image.url}
+                                        key={image.id}
+                                        onClick={(event) => handleSave(event, image)} />
+                                    <TitleBox color={savedImages.includes(image.url) ? 'blue' : 'black'} title={image.title} />
+                                </Grid>
+                            </>)}
+                        {open === true && <SaveImageModal selectedImage={selectedImage} savedImages={savedImages} ></SaveImageModal>}
                     </Grid>
                 </Grid>
             </TabPanel >
