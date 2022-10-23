@@ -62,6 +62,17 @@ export default function BasicModal({ selectedImage, savedImages }) {
         }
     }
 
+    const handleCancel = () => {
+        setOpen(false)
+        setFolderName('')
+
+    }
+
+    const handleFolderNameChange = (event) => {
+        event.preventDefault()
+        setFolderName(event.target.value.toUpperCase())
+    }
+
     return (
         <div>
             <Modal
@@ -74,10 +85,7 @@ export default function BasicModal({ selectedImage, savedImages }) {
                 <Box sx={style}>
                     <TextField
                         value={folderName}
-                        onChange={(e) => {
-                            e.preventDefault()
-                            setFolderName(e.target.value.toUpperCase())
-                        }}
+                        onChange={handleFolderNameChange}
                         error={folderName.length < 1}
                         placeholder={'Select a folder Name'}>
                     </TextField>
@@ -85,11 +93,13 @@ export default function BasicModal({ selectedImage, savedImages }) {
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             {`This image has been saved ${data ? data : ''} times`}
                         </Typography> : 'Loading...'}
-                    {isLoadingPost ? 'Saving' : <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>Save</Button>}
-                    <Button onClick={() => {
-                        setOpen(false)
-                        setFolderName('')
-                    }}>Cancel</Button>
+                    {isLoadingPost ? 'Saving' :
+                        <Button disabled={folderName.length < 1} onClick={(e) => handleLocalSave(e, selectedImage, folderName)}>
+                            Save
+                        </Button>}
+                    <Button onClick={handleCancel}>
+                        Cancel
+                    </Button>
                 </Box>
             </Modal>
         </div>

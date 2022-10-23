@@ -10,6 +10,7 @@ export const ModalContext = createContext()
 const StyledImage = styled(Box)(() =>
 ({
     padding: 0,
+    borderRadius: '3px',
     margin: `10px 5px`,
     height: '270px',
     width: `300px`,
@@ -46,7 +47,7 @@ function AllImagesContainer({ arrayOfImages, allowModal }) {
                                         component='img'
                                         loading='lazy'
                                         src={image.url}
-                                        key={image.id}
+                                        key={image.title}
                                         onClick={(event) => handleSave(event, image)} />
                                     <TitleBox color={savedImages.includes(image.url) ? 'blue' : 'black'} title={image.title} />
                                 </Grid>
